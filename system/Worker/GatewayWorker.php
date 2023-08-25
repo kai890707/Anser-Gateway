@@ -19,16 +19,19 @@ class GatewayWorker extends WorkerRegistrar
 {
     protected Gateway $gatewayConfig;
 
+    protected $routeList;
+
     public function __construct()
     {
         $this->gatewayConfig = new Gateway();
+        $this->routeList = RouteCollector::loadRoutes();
         self::staticSetting();
     }
 
     public function initWorker(): Worker
     {
         $config    = $this->gatewayConfig;
-
+        $routeList = $this->routeList;
         $webWorker = new Worker(
             sprintf(
                 '%s://%s:%s',
@@ -59,12 +62,12 @@ class GatewayWorker extends WorkerRegistrar
         };
 
         // Worker
-        $webWorker->onMessage = static function (TcpConnection $connection, Request $request) use ($config) {
-            Coroutine::run(static function () use ($connection, $request, $config): void {
+        $webWorker->onMessage = static function (TcpConnection $connection, Request $request) use ($config,$routeList) {
+            Coroutine::run(static function () use ($connection, $request, $config,$routeList): void {
                 $config->runtimeTcpConnection($connection, $request);
 
                 # Do get routeCollector and new a Router class
-                $routeList = RouteCollector::loadRoutes();
+                // $routeList = RouteCollector::loadRoutes();
                 $router    = new Router($routeList);
                 # Injection Router class to AnserGateway
                 $gateway   = new AnserGateway($router);
