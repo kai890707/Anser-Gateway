@@ -9,7 +9,6 @@ class CreateOrder extends BaseController
 {
     public function createOrder()
     {
-
         $jsonData  = json_decode($this->request->rawBody());
 
 		$memberKey = $jsonData->memberKey;

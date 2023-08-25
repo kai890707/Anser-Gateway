@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use SDPMlab\Anser\Exception\ActionException;
 use SDPMlab\Anser\Service\ActionInterface;
 
+
 class Inventory extends SimpleService
 {
 
