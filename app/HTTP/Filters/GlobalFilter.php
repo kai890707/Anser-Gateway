@@ -18,7 +18,7 @@ class GlobalFilter implements FilterInterface
     public function before(Request $request, $arguments = null)
     {
         //
-        var_dump("GlobalFilter");
+        // var_dump("GlobalFilter");
     }
 
     /**

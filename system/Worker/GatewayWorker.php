@@ -53,6 +53,7 @@ class GatewayWorker extends WorkerRegistrar
         $webWorker->onWorkerStart = static function (Worker $worker) use ($config) {
             Autoloader::$instance->appRegister();
             Autoloader::$instance->composerRegister();
+            require_once PROJECT_CONFIG . 'Service.php';
             //此處開始框架其他部件初始化
 
         };
